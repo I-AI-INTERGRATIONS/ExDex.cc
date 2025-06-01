@@ -1,0 +1,55 @@
+version: '2'
+services:
+  app:
+    environment:
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
+      - DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+    build: .
+    depends_on:
+      - db
+      - rabbitmq
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 8090:80
+    links:
+      - db
+      - rabbitmq
+
+  worker:
+    environment:
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
+      - DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+    build: .
+    command: ./worker.sh
+    depends_on:
+      - db
+      - rabbitmq
+    volumes:
+      - ./:/usr/src/app
+    links:
+      - db
+      - rabbitmq
+  db:
+    image: postgres:12.3-alpine
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  rabbitmq:
+    image: rabbitmq:3.8.5-management #this has management plugin enabled
+    ports:
+      - 15672:15672
+      - 5671:5671
+      - 5672:5672
