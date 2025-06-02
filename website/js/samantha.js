@@ -1,5 +1,5 @@
 // Samantha.js: Local AI Banking Assistant Frontend
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = window.EXDEX_API_URL || 'http://127.0.0.1:8000';
 
 const chatLog = document.getElementById('samantha-chat-log');
 const chatForm = document.getElementById('samantha-chat-form');
