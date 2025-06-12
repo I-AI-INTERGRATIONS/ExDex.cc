@@ -243,9 +243,6 @@ function showNotification(message, type = 'info') {
 function initAnimations() {
     // Check if GSAP is loaded
     if (typeof gsap === 'undefined') return;
-    if (typeof ScrollTrigger !== 'undefined' && gsap.registerPlugin) {
-        gsap.registerPlugin(ScrollTrigger);
-    }
     
     // Animate hero title
     gsap.from('.hero-title', {

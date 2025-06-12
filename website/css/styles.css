@@ -785,10 +785,6 @@ a:hover {
     z-index: 2;
 }
 
-.vault-door.open {
-    transform: rotateY(-90deg);
-}
-
 .vault-door:hover {
     transform: rotateY(-30deg);
 }

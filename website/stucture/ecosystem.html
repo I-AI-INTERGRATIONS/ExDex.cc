@@ -1655,16 +1655,10 @@
     <script>
         function openKnoxWallet() {
             document.getElementById('knoxWallet').style.display = 'block';
-            document.querySelectorAll('.vault-door').forEach(door => {
-                door.classList.add('open');
-            });
         }
 
         function closeKnoxWallet() {
             document.getElementById('knoxWallet').style.display = 'none';
-            document.querySelectorAll('.vault-door').forEach(door => {
-                door.classList.remove('open');
-            });
         }
 
         function showTab(tabId) {

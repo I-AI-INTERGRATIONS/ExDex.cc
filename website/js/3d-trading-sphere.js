@@ -162,8 +162,8 @@ class TradingSphere {
         // Add inner core to represent BHE token at center
         const coreGeometry = new THREE.SphereGeometry(this.config.sphereRadius * 0.1, 32, 32);
         const coreMaterial = new THREE.MeshStandardMaterial({
-            color: 0x0b9fe7,
-            emissive: 0x001144,
+            color: 0xff0000,
+            emissive: 0x330000,
             metalness: 0.9,
             roughness: 0.2
         });
