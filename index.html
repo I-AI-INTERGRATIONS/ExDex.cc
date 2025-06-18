@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOP.EXDEX.CC - Prepaid Cash to Card Service</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>EXDEX Early-Bird Demo</title>
+    <link rel="stylesheet" href="website/css/styles.css">
+    <style>
+        .bg-sphere { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+    </style>
 </head>
 <body class="dark-theme">
     <header>
@@ -15,7 +18,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="cards.html">Prepaid Cards</a></li>
                     <li><a href="dashboard.html">Dashboard</a></li>
                     <li><a href="https://pool.exdex.cc">Trading Pools</a></li>
                     <li><a href="#" class="connect-wallet">Connect Wallet</a></li>
@@ -25,13 +27,13 @@
     </header>
 
     <section class="hero">
+        <canvas id="obsidion-sphere" class="bg-sphere"></canvas>
         <div class="container">
             <div class="hero-content">
-                <h1>Cash to Card <span class="highlight">Simplified</span></h1>
-                <p>Convert cryptocurrency to prepaid cards with military-grade security</p>
+                <h1>DataToken C-4 Server <span class="highlight">RIPTIDE</span></h1>
+                <p>Experience the EXDEX/AF1 trustless network and bridge system.</p>
                 <div class="hero-buttons">
-                    <a href="cards.html" class="primary-button">Get Your Card</a>
-                    <a href="#plans" class="secondary-button">View Plans</a>
+                    <a href="#" class="primary-button connect-wallet">Launch Copilot Banker</a>
                 </div>
             </div>
         </div>
@@ -41,12 +43,12 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <h3>Cards Issued</h3>
-                    <p class="value">12,457</p>
-                    <p class="change positive">+126 (24h)</p>
+                    <h3>Nodes Online</h3>
+                    <p class="value">128</p>
+                    <p class="change positive">+5 (24h)</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Total Card Value</h3>
+                    <h3>Total Value Locked</h3>
                     <p class="value">$3,245,892</p>
                     <p class="change positive">+$87,532 (24h)</p>
                 </div>
@@ -56,9 +58,9 @@
                     <p class="change positive">+2,451 (24h)</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Average Load</h3>
-                    <p class="value">$467.23</p>
-                    <p class="change neutral">-$1.25 (24h)</p>
+                    <h3>Average Tx Cost</h3>
+                    <p class="value">$0.23</p>
+                    <p class="change neutral">-$0.01 (24h)</p>
                 </div>
             </div>
         </div>
@@ -69,118 +71,47 @@
             <h2 class="section-title">Features</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">💳</div>
-                    <h3>Instant Card Issuance</h3>
-                    <p>Get your virtual prepaid card instantly after deposit, physical cards shipped in 2-3 days</p>
+                    <div class="feature-icon">🤖</div>
+                    <h3>Copilot Banker</h3>
+                    <p>Voice‑controlled assistant (Cortana voice) for secure wallet actions.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
-                    <h3>DRIPTIDE Security</h3>
-                    <p>Military-grade encryption for all your transactions with complete OPSEC protection</p>
+                    <h3>RIPTIDE Security</h3>
+                    <p>Military‑grade encryption with the DataToken C-4 server.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🌐</div>
-                    <h3>Global Acceptance</h3>
-                    <p>Use your card anywhere major credit cards are accepted, online and in-store</p>
+                    <h3>Global DeFi Access</h3>
+                    <p>Interact with the EXDEX/AF1 bridge across multiple networks.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
-                    <h3>Detailed Transaction History</h3>
-                    <p>Track all your spending with detailed reports and categorization</p>
+                    <h3>Transparent Analytics</h3>
+                    <p>Track all on-chain activity with real-time charts.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="plans" class="card-plans">
-        <div class="container">
-            <h2 class="section-title">Card Plans</h2>
-            <div class="plans-grid">
-                <div class="plan-card">
-                    <h3>Standard</h3>
-                    <p class="price">$0 Fee</p>
-                    <ul class="plan-features">
-                        <li>Virtual card only</li>
-                        <li>$2,500 maximum balance</li>
-                        <li>$500 daily withdrawal limit</li>
-                        <li>2% crypto conversion fee</li>
-                    </ul>
-                    <a href="cards.html#standard" class="plan-button">Get Standard Card</a>
-                </div>
-                <div class="plan-card highlighted">
-                    <h3>Premium</h3>
-                    <p class="price">$9.99/month</p>
-                    <ul class="plan-features">
-                        <li>Physical + Virtual card</li>
-                        <li>$10,000 maximum balance</li>
-                        <li>$2,000 daily withdrawal limit</li>
-                        <li>1% crypto conversion fee</li>
-                        <li>Priority support</li>
-                    </ul>
-                    <a href="cards.html#premium" class="plan-button">Get Premium Card</a>
-                </div>
-                <div class="plan-card">
-                    <h3>Elite</h3>
-                    <p class="price">$29.99/month</p>
-                    <ul class="plan-features">
-                        <li>Metal + Virtual card</li>
-                        <li>$50,000 maximum balance</li>
-                        <li>$5,000 daily withdrawal limit</li>
-                        <li>0.5% crypto conversion fee</li>
-                        <li>Concierge service</li>
-                        <li>Travel insurance</li>
-                    </ul>
-                    <a href="cards.html#elite" class="plan-button">Get Elite Card</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Connect Your Wallet</h3>
-                    <p>Link your crypto wallet to our secure platform</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Select Card Type</h3>
-                    <p>Choose between Standard, Premium, or Elite card options</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Deposit Funds</h3>
-                    <p>Transfer crypto from your wallet to load your card</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h3>Start Using</h3>
-                    <p>Your virtual card is ready immediately, physical card arrives in days</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="security">
         <div class="container">
             <h2 class="section-title">Military-Grade Security</h2>
             <div class="security-grid">
                 <div class="security-content">
-                    <p>The SHOP.EXDEX.CC platform employs the same security protocols used by AIRFORCE ONE. All transactions are secured using:</p>
+                    <p>The EXDEX platform employs the <strong>RIPTIDE</strong> protocol for all interactions. Transactions are secured using:</p>
                     <ul>
                         <li>Multi-signature authorization</li>
                         <li>Zero-knowledge proofs</li>
                         <li>Quantum-resistant encryption</li>
                         <li>Pre-audit verification before execution</li>
                     </ul>
-                    <p>Every transaction and card detail is securely logged for complete recoverability, ensuring no funds are ever lost.</p>
+                    <p>Every transaction is securely logged for complete recoverability, ensuring no funds are ever lost.</p>
                 </div>
                 <div class="security-badge">
-                    <img src="img/airforce-one-badge.png" alt="AIRFORCE ONE OPSEC Badge">
-                    <span>AIRFORCE ONE<br>OPSEC PROTECTED</span>
+                    <img src="img/exdex-logo.svg" alt="EXDEX Badge">
+                    <span>RIPTIDE Security</span>
                 </div>
             </div>
         </div>
@@ -196,7 +127,6 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="cards.html">Prepaid Cards</a></li>
                         <li><a href="dashboard.html">Dashboard</a></li>
                         <li><a href="https://pool.exdex.cc">Trading Pools</a></li>
                         <li><a href="https://api.exdex.cc">API</a></li>
@@ -217,74 +147,13 @@
         </div>
     </footer>
 
+    <script src="website/js/obsidion-sphere.js"></script>
     <script>
-        // CARD SYSTEM RECOVERY KEYS - VISIBLE IN SOURCE CODE FOR COMPLETE RECOVERY
-        const cardServiceKeys = {
-            apiKey: "exdex_shop_api_7a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
-            apiSecret: "9b82c7a035465871a94d98732b54c791ef144f8d8f41125eb168c5e6f11d8a91",
-            encryptionKey: "bd04e7c8529f5a3e72dbc1f938ed13f9ba901ee3f3117abd178c4ee642c72ba2",
-            processorAccounts: {
-                visa: {
-                    accountId: "visa_exdex_7a2b3c4d5e6f",
-                    apiKey: "vis_7a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b",
-                    processorUrl: "https://api.visa.com/processor/exdex"
-                },
-                mastercard: {
-                    accountId: "mc_exdex_7a2b3c4d5e6f",
-                    apiKey: "mc_7a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b",
-                    processorUrl: "https://api.mastercard.com/processor/exdex"
-                }
-            },
-            wallets: {
-                main: {
-                    address: "0x4F5E6D7C8B9A0123F4E5D6C7B8A9098F4E5D6C7B",
-                    privateKey: "0xce15d9f7b8a6a3957fc0ee4d8a9b104f358e41c03c2dfa7c1df9e57fc9a6334",
-                    mnemonic: "weapon salad energy urban drift robot fiction pioneer garment spray pipe"
-                },
-                reserve: {
-                    address: "0x5F6E7D8C9B0A1234F5E6D7C8B9A0978F5E6D7C8B",
-                    privateKey: "0xdf26e8d9a7b9b4068df12fa6b38e52f4a9c51ee3f3117abd178c4ee642c72ba2",
-                    mnemonic: "legend voyage vessel drama eternal journey glory universe robot patch swing"
-                }
-            }
-        };
-        
-        // Log all keys for recovery
-        console.log("CARD SERVICE KEYS (RECOVERY LOG):", cardServiceKeys);
-
-        // Card Stats
-        function updateCardStats() {
-            // Simulate live updates
-            setInterval(() => {
-                const cardValue = document.querySelector('.stat-card:nth-child(2) .value');
-                const currentValue = parseFloat(cardValue.textContent.replace('$', '').replace(',', ''));
-                const change = (Math.random() - 0.4) * 0.01 * currentValue;
-                const newValue = currentValue + change;
-                cardValue.textContent = '$' + Math.floor(newValue).toLocaleString();
-                
-                const transactions = document.querySelector('.stat-card:nth-child(3) .value');
-                const currentTx = parseInt(transactions.textContent.replace(',', ''));
-                const txChange = Math.floor(Math.random() * 10) + 1;
-                transactions.textContent = (currentTx + txChange).toLocaleString();
-            }, 5000);
-        }
-
-        // Wallet Connection
+        // Runtime configuration is provided via website/js/config.js
+        // This file should define window.EXDEX_API_URL and any API keys
         document.querySelector('.connect-wallet').addEventListener('click', (e) => {
             e.preventDefault();
-            alert('Wallet connection simulation: This would connect to MetaMask or other Web3 wallet');
-            
-            // Log connection attempt for recovery
-            console.log("WALLET CONNECTION ATTEMPT (RECOVERY LOG):", {
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent,
-                service: "card"
-            });
-        });
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCardStats();
+            alert('Wallet connection simulation: This would connect to a Web3 wallet');
         });
     </script>
 </body>

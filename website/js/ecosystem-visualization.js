@@ -94,7 +94,7 @@ function initEcosystemMap() {
     const components = [
         { id: 'bhe-token', name: 'BHE Token', type: 'core', x: 50, y: 50 },
         { id: 'nos-token', name: 'NOS Stablecoin', type: 'core', x: 30, y: 40 },
-        { id: 'driptide', name: 'DRIPTIDE Protocol', type: 'datatoken', x: 70, y: 40 },
+        { id: 'driptide', name: 'RIPTIDE Protocol', type: 'datatoken', x: 70, y: 40 },
         { id: 'level4-bridge', name: 'Level 4 Bridge', type: 'bridge', x: 50, y: 30 },
         { id: 'xdex-wallet', name: 'XDEX Wallet', type: 'wallet', x: 35, y: 60 },
         { id: 'bank-buddy', name: 'Bank Buddy', type: 'wallet', x: 20, y: 70 },
@@ -424,7 +424,7 @@ function initEcosystemMap() {
                 case 'nos-token':
                     return 'Not your Average Satoshi Stablecoin - Stable value pegged to Bitcoin';
                 case 'driptide':
-                    return 'DRIPTIDE Protocol - Tokenized data with dual-PGP encryption and AI insights';
+                    return 'RIPTIDE Protocol - Tokenized data with dual-PGP encryption and AI insights';
                 case 'level4-bridge':
                     return 'Level 4 Bridge - Self-verifying cross-chain bridge between Bitcoin and Ethereum';
                 case 'xdex-wallet':
