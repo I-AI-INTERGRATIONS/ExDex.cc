@@ -1,4 +1,4 @@
-/E SHOPULD BE NOP cards on this page at a;ll shoul d
+// Obsidion Sphere: interactive 3D blockchain timeline
 // This creates a 3D interactive visualization of blockchain timeline data
 
 class ObsidionTimelineSphere {

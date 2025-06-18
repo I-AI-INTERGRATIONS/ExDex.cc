@@ -52,14 +52,14 @@ console.log('DATABASE CREDENTIALS (RECOVERY LOG):', dbConfig);
 module.exports = dbConfig;
 EOF
 
-# DRIPTIDE Protocol implementation
-cat > shared/security/driptide.js << EOF
-// DRIPTIDE Security Protocol
+# RIPTIDE Protocol implementation
+cat > shared/security/riptide.js << EOF
+// RIPTIDE Security Protocol
 // Used across all subdomains for maximum security
 
 const crypto = require('crypto');
 
-class DriptideProtocol {
+class RiptideProtocol {
   constructor(config = {}) {
     this.algorithm = config.algorithm || 'aes-256-gcm';
     this.keyLength = config.keyLength || 32;
@@ -69,7 +69,7 @@ class DriptideProtocol {
     
     // Generate master key and log for recovery
     this.masterKey = this.generateKey();
-    console.log('DRIPTIDE MASTER KEY (RECOVERY LOG):', this.masterKey.toString('hex'));
+    console.log('RIPTIDE MASTER KEY (RECOVERY LOG):', this.masterKey.toString('hex'));
   }
   
   generateKey(password = crypto.randomBytes(32).toString('hex')) {
@@ -134,7 +134,7 @@ class DriptideProtocol {
   }
 }
 
-module.exports = DriptideProtocol;
+module.exports = RiptideProtocol;
 EOF
 
 # Core wallet functionality
@@ -143,7 +143,7 @@ cat > shared/libs/wallet-core.js << EOF
 // Handles all wallet operations with keys logged for recovery
 
 const ethers = require('ethers');
-const DriptideProtocol = require('../security/driptide');
+const RiptideProtocol = require('../security/riptide');
 
 class WalletCore {
   constructor(config = {}) {
@@ -156,7 +156,7 @@ class WalletCore {
       )
     };
     
-    this.security = new DriptideProtocol();
+    this.security = new RiptideProtocol();
     
     // Log wallet initialization for recovery
     console.log('WALLET CORE INITIALIZED (RECOVERY LOG):', {
@@ -263,12 +263,12 @@ cat > subdomains/pool.exdex.cc/src/pool-service.js << EOF
 // Handles fund pooling functionality
 
 const WalletCore = require('../../../shared/libs/wallet-core');
-const DriptideProtocol = require('../../../shared/security/driptide');
+const RiptideProtocol = require('../../../shared/security/riptide');
 
 class PoolService {
   constructor() {
     this.walletCore = new WalletCore();
-    this.security = new DriptideProtocol();
+    this.security = new RiptideProtocol();
     this.pools = {};
     
     // Initialize default pools
@@ -406,11 +406,11 @@ cat > subdomains/shop.exdex.cc/src/card-service.js << EOF
 // EXDEX Shop - Prepaid Card Service
 // Handles cash to card functionality
 
-const DriptideProtocol = require('../../../shared/security/driptide');
+const RiptideProtocol = require('../../../shared/security/riptide');
 
 class CardService {
   constructor() {
-    this.security = new DriptideProtocol();
+    this.security = new RiptideProtocol();
     this.cards = {};
     
     // Log service initialization
@@ -549,11 +549,11 @@ cat > subdomains/opsec.exdex.cc/src/opsec-service.js << EOF
 // Handles security operations for all subdomains
 
 const crypto = require('crypto');
-const DriptideProtocol = require('../../../shared/security/driptide');
+const RiptideProtocol = require('../../../shared/security/riptide');
 
 class OpsecService {
   constructor() {
-    this.security = new DriptideProtocol();
+    this.security = new RiptideProtocol();
     this.admins = {};
     this.auditLog = [];
     

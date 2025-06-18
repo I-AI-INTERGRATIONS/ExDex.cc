@@ -1,4 +1,4 @@
-// DRIPTIDE-ExDe Pool System Implementation
+// RIPTIDE-ExDe Pool System Implementation
 // Integrates Hummingbot_20 and BonkDaBot strategies for secure fund pooling
 // Implements military-grade OPSEC protocols for user fund protection
 
@@ -34,7 +34,7 @@ function initPoolVisualization() {
     canvas.height = canvas.clientHeight;
     gl.viewport(0, 0, canvas.width, canvas.height);
     
-    // Define shaders for the DRIPTIDE visualization
+    // Define shaders for the RIPTIDE visualization
     const vertexShaderSource = `
         attribute vec2 a_position;
         attribute vec3 a_color;
@@ -67,7 +67,7 @@ function initPoolVisualization() {
     const positionBuffer = gl.createBuffer();
     const colorBuffer = gl.createBuffer();
     
-    // Generate vertices for DRIPTIDE flow visualization
+    // Generate vertices for RIPTIDE flow visualization
     const numPoints = 5000;
     const positions = new Float32Array(numPoints * 2);
     const colors = new Float32Array(numPoints * 3);
@@ -201,19 +201,19 @@ function initTabSwitching() {
     });
 }
 
-// Initialize DRIPTIDE protocol for secure transactions
+// Initialize RIPTIDE protocol for secure transactions
 function initDriptideProtocol() {
-    console.log('Initializing DRIPTIDE protocol for secure fund transfers');
+    console.log('Initializing RIPTIDE protocol for secure fund transfers');
     
-    // DRIPTIDE protocol key verification
+    // RIPTIDE protocol key verification
     const driptideKeys = {
         publicKey: '0x7A2B3C4D5E6F7A8B9C0D1E2F3A4B5C6D7E8F9A0B',
-        encryptionVersion: 'DRIPTIDE-ExDe-v2.3',
+        encryptionVersion: 'RIPTIDE-ExDe-v2.3',
         verificationStatus: 'AIRFORCE_ONE_VERIFIED'
     };
     
     // Log all keys for recovery as required by user
-    console.log('DRIPTIDE Protocol Keys (RECOVERY LOG):', driptideKeys);
+    console.log('RIPTIDE Protocol Keys (RECOVERY LOG):', driptideKeys);
     
     // Set up protocol event listeners for security events
     document.getElementById('riptide-protocol').addEventListener('change', toggleRiptideProtection);
@@ -237,7 +237,7 @@ function toggleRiptideProtection(event) {
 // Toggle ExDe encryption
 function toggleExDeEncryption(event) {
     const isEnabled = event.target.checked;
-    console.log(`DRIPTIDE-ExDe Encryption ${isEnabled ? 'enabled' : 'disabled'}`);
+    console.log(`RIPTIDE-ExDe Encryption ${isEnabled ? 'enabled' : 'disabled'}`);
     
     // Log security settings for recovery
     logSecuritySettings({
@@ -325,7 +325,7 @@ function initHummingbot20Integration() {
         apiSecret: 'ks92md74bsjt47dm3nfh38sn3kfu83n37f6s',
         strategies: [
             {
-                name: 'DRIPTIDE_PURE_MARKET_MAKING',
+                name: 'RIPTIDE_PURE_MARKET_MAKING',
                 config: {
                     market: 'bhe_usdt',
                     bid_spread: 0.2,
