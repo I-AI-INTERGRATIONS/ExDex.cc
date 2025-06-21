@@ -17,3 +17,14 @@ variables.
 
 For further background on secure handling of credentials, refer to the **BHE NAS BTC
 Breach** repository which documents lessons learned from previous incidents.
+
+## PROXGUARD demo
+
+The file `website/stucture/PROXGUARD.WEBSITE_.zip` previously bundled a demo of
+the ProxGuard project. It has been removed from this repository to keep the
+repository size manageable. You can obtain the same archive by cloning the
+upstream project:
+
+```bash
+git clone https://github.com/yourusername/proxguard.git
+```
