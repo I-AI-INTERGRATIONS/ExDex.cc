@@ -25,6 +25,4 @@ the ProxGuard project. It has been removed from this repository to keep the
 repository size manageable. You can obtain the same archive by cloning the
 upstream project:
 
-```bash
-git clone https://github.com/yourusername/proxguard.git
-```
+```bas
