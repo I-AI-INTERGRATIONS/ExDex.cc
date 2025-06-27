@@ -1,0 +1,158 @@
+%% --- ECOSYSTEM ARCHITECTURE ---
+graph TD
+  subgraph User
+    ARCH_A
+    ARCH_UB
+    ARCH_UF
+  end
+
+  subgraph Web_Interfaces
+    ARCH_B1
+    ARCH_B2
+    ARCH_B3
+    ARCH_B4
+    ARCH_B5
+  end
+
+  subgraph Backend_Node
+    ARCH_C1
+    ARCH_C1A
+    ARCH_C1B
+    ARCH_C2
+    ARCH_C3
+    ARCH_C3A
+    ARCH_C3B
+    ARCH_C3C
+    ARCH_C4
+    ARCH_C5
+    ARCH_C5A
+    ARCH_C5B
+    ARCH_C6
+    ARCH_C6A
+    ARCH_C6B
+    ARCH_C7
+    ARCH_C7A
+    ARCH_C7B
+    ARCH_C8
+  end
+
+  subgraph Data_State
+    ARCH_D1
+    ARCH_D2
+    ARCH_D3
+  end
+
+  %% Node labels
+  ARCH_A[Web Browser]
+  ARCH_UB[Knox Wallet]
+  ARCH_UF[User Feedback]
+  ARCH_B1[website/ - Main Dashboard]
+  ARCH_B2[pool.exdex.cc - Staking Portal]
+  ARCH_B3[shop.exdex.cc - Prepaid Cards / Fiat Gateway]
+  ARCH_B4[opsec.exdex.cc - Trading Platform]
+  ARCH_B5[Session Replay/Monitoring]
+  ARCH_C1[backend/ - API & RPC]
+  ARCH_C1A[REST API]
+  ARCH_C1B[WebSocket API]
+  ARCH_C2[boot/ - Node Bootstrap]
+  ARCH_C3[contracts/ - Smart Contracts]
+  ARCH_C3A[Staking Logic]
+  ARCH_C3B[Trading Engine]
+  ARCH_C3C[Stablecoin Logic]
+  ARCH_C4[deployment/ - Automation]
+  ARCH_C5[Seritan Bug Aspect]
+  ARCH_C5A[AI Bug Detection]
+  ARCH_C5B[Bug Report/Stats]
+  ARCH_C6[EXDEX Home Node]
+  ARCH_C6A[Transaction Broadcaster]
+  ARCH_C6B[Node Status Monitor]
+  ARCH_C7["Bank Buddy (Fiat/Crypto Bridge)"]
+  ARCH_C7A[Fiat On/Off Ramp]
+  ARCH_C7B[3rd Party API]
+  ARCH_C8[Banner Blocks Encryption]
+  ARCH_D1[Wallets & State Files]
+  ARCH_D2[Encrypted Wallet Vault]
+  ARCH_D3[Blockchain State]
+
+  %% Connections (same as before)
+  ARCH_A -->|UI/API| ARCH_B1
+  ARCH_A -->|UI/API| ARCH_B2
+  ARCH_A -->|UI/API| ARCH_B3
+  ARCH_A -->|UI/API| ARCH_B4
+  ARCH_A -->|Session Replay| ARCH_B5
+  ARCH_UB -->|Sign/Approve| ARCH_B1
+  ARCH_UF -->|Feedback| ARCH_B1
+
+  ARCH_B1 --> ARCH_C1
+  ARCH_B2 --> ARCH_C1
+  ARCH_B3 --> ARCH_C1
+  ARCH_B4 --> ARCH_C1
+  ARCH_B5 -->|Monitor| ARCH_C1
+
+  ARCH_C1 --> ARCH_C1A
+  ARCH_C1 --> ARCH_C1B
+  ARCH_C1A -->|RPC| ARCH_C3
+  ARCH_C1B -->|WS| ARCH_C3
+  ARCH_C1 --> ARCH_C2
+  ARCH_C1 --> ARCH_C6
+  ARCH_C1 --> ARCH_C5
+  ARCH_C1 --> ARCH_C8
+  ARCH_C5 --> ARCH_C5A
+  ARCH_C5 --> ARCH_C5B
+  ARCH_C5A -->|AI Error Handling| ARCH_C6
+  ARCH_C5B -->|Bug Stats| ARCH_B1
+  ARCH_C6 -->|Broadcast Tx| ARCH_C6A
+  ARCH_C6 -->|Monitor| ARCH_C6B
+  ARCH_C6A -->|To Blockchain| ARCH_C3
+  ARCH_C6B -->|Status| ARCH_B1
+  ARCH_C6 -->|Wallet Access| ARCH_UB
+  ARCH_C6 -->|Fiat/Crypto| ARCH_C7
+  ARCH_C7 --> ARCH_C7A
+  ARCH_C7 --> ARCH_C7B
+  ARCH_C7A -->|On/Off Ramp| ARCH_C6
+  ARCH_C7B -->|API| ARCH_C6
+  ARCH_C8 -->|Encrypt| ARCH_D2
+
+  ARCH_C3 --> ARCH_C3A
+  ARCH_C3 --> ARCH_C3B
+  ARCH_C3 --> ARCH_C3C
+  ARCH_C3A -->|Staking| ARCH_B2
+  ARCH_C3B -->|Trading| ARCH_B4
+  ARCH_C3C -->|Stablecoin| ARCH_B3
+  ARCH_C3 --> ARCH_D3
+  ARCH_C6 --> ARCH_D1
+  ARCH_C6 --> ARCH_D2
+  ARCH_C4 --> ARCH_C1
+  ARCH_C4 --> ARCH_C2
+
+  ARCH_D1 -->|Wallet Data| ARCH_UB
+  ARCH_D2 -->|Decrypted| ARCH_UB
+  ARCH_D3 -->|Sync| ARCH_C6A
+
+%% --- PURCHASE FLOW EXAMPLE ---
+%% Render this as a separate diagram for best results
+
+%% flowchart TD
+%%     PUR_U[User: Initiate Purchase] --> PUR_WI[Web Interface: Submit Order]
+%%     PUR_WI --> PUR_BE[Backend: Process Request]
+%%     PUR_BE --> PUR_HN[EXDEX Home Node: Validate & Prepare Tx]
+%%     PUR_HN --> PUR_KW[Knox Wallet: Sign Transaction]
+%%     PUR_HN --> PUR_BB{Fiat Needed?}
+%%     PUR_BB -- Yes --> PUR_BK[Bank Buddy: Fiat/Crypto Conversion]
+%%     PUR_BK --> PUR_HN
+%%     PUR_BB -- No --> PUR_HN
+%%     PUR_HN --> PUR_BC[Blockchain: Broadcast Transaction]
+%%     PUR_BC --> PUR_HN
+%%     PUR_HN --> PUR_BE
+%%     PUR_BE --> PUR_WI
+%%     PUR_WI --> PUR_U[User: Confirmation]
+
+%% Steps:
+%% 1. User initiates purchase (token/card)
+%% 2. Web interface submits order to backend
+%% 3. Backend processes and hands off to Home Node
+%% 4. Home Node requests Knox Wallet to sign
+%% 5. If fiat, Bank Buddy handles conversion
+%% 6. Home Node broadcasts transaction
+%% 7. Confirmation flows back to user
+// [MermaidChart: 29e5049c-16eb-44f3-a788-319d590dda25]
