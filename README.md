@@ -5,8 +5,7 @@ transactions. The project provides a sample frontend that interacts with EXDEX s
 for wallet and trading functionality. Only EXDEX-approved smart contracts can be used
 with the bridge, and those contracts are pre-written and audited as part of the platform.
 
-This repository contains static web assets only. The backend services and contract code
-are maintained separately and must be configured before deploying a production instance.
+This repository contains static web assets only. The backend services and contract code are maintained separately and must be provided when setting up a production instance. Smart contract packages can be obtained from the official ExDEX repository or from your local node.
 
 ## Configuration
 
