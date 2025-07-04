@@ -1,8 +1,4 @@
 # ExDex.cc
-
-ExDex.cc is an **early-bird showcase** of the EXDEX/AF1 bridge system. It highlights
-the DataToken **C-4 server** and the RIPTIDE protocol that power a 100% trustless
-network. The project provides a sample frontend that interacts with EXDEX services
 for wallet and trading functionality. Only EXDEX-approved smart contracts can be used
 with the bridge, and those contracts are pre-written and audited as part of the platform.
 
