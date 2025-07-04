@@ -1,7 +1,4 @@
 # ExDex.cc
-
-ExDex.cc is a demonstration of the EXDEX/AF1 bridge system for managing cryptocurrency
-transactions. The project provides a sample frontend that interacts with EXDEX services
 for wallet and trading functionality. Only EXDEX-approved smart contracts can be used
 with the bridge, and those contracts are pre-written and audited as part of the platform.
 
@@ -17,12 +14,3 @@ variables.
 
 For further background on secure handling of credentials, refer to the **BHE NAS BTC
 Breach** repository which documents lessons learned from previous incidents.
-
-## PROXGUARD demo
-
-The file `website/stucture/PROXGUARD.WEBSITE_.zip` previously bundled a demo of
-the ProxGuard project. It has been removed from this repository to keep the
-repository size manageable. You can obtain the same archive by cloning the
-upstream project:
-
-```bas
