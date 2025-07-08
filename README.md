@@ -1,4 +1,5 @@
 # ExDex.cc
+
 for wallet and trading functionality. Only EXDEX-approved smart contracts can be used
 with the bridge, and those contracts are pre-written and audited as part of the platform.
 
