@@ -41,25 +41,28 @@ class WalletImportBalanceRequest(BaseModel):
     mnemonic: str
 
 class PaymentRequest(BaseModel):
-    blockchain: str
-    from_address: str
-    to_address: str
+    """Combined payment model supporting blockchain and card operations."""
+
+    # Fields for blockchain transfers
+    blockchain: Optional[str] = None
+    sender_address: Optional[str] = None
+    recipient_address: Optional[str] = None
+    private_key: Optional[str] = None
+
+    # Common field
     amount: float
-    private_key: str
+
+    # Fields for card/crypto purchases
+    currency: Optional[str] = None  # Crypto or fiat currency code
+    customer_email: Optional[str] = None
+    metadata: Optional[dict] = None
+    payment_method: str = "crypto"  # 'crypto' or 'atm'
+    crypto_currency: str = "BTC"  # BTC, ETH, USDT, etc
+    fiat_currency: str = "USD"  # USD, EUR, GBP, etc
 
 # --- AI Assistant Models ---
 class AIChatRequest(BaseModel):
     message: str
-
-# --- Card Payment Model ---
-class PaymentRequest(BaseModel):
-    amount: float
-    currency: str  # Can be crypto or fiat
-    customer_email: str
-    metadata: dict = None
-    payment_method: str = "crypto"  # 'crypto' or 'atm'
-    crypto_currency: str = "BTC"  # BTC, ETH, USDT, LTC, DOGE, XRP, BCH, ADA, SOL, DOT
-    fiat_currency: str = "USD"  # USD, EUR, GBP, AUD, CAD, JPY
 
 # --- Card BIN and User Card Generation ---
 CARD_BIN = "420769"
@@ -232,9 +235,9 @@ def send_transaction(req: TransactionRequest):
 @app.post("/wallet/payment")
 def payment(req: PaymentRequest):
     if req.blockchain == 'btc':
-        return send_btc_transaction(req.from_address, req.to_address, req.amount, req.private_key)
+        return send_btc_transaction(req.sender_address, req.recipient_address, req.amount, req.private_key)
     elif req.blockchain == 'eth':
-        return send_eth_transaction(req.from_address, req.to_address, req.amount, req.private_key)
+        return send_eth_transaction(req.sender_address, req.recipient_address, req.amount, req.private_key)
     else:
         raise HTTPException(status_code=400, detail="Unsupported blockchain")
 
