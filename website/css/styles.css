@@ -141,23 +141,23 @@ a:hover {
 }
 
 .stars {
-    /* removed missing background image */
-    background: none;
+    background: url('../img/stars.png') repeat;
+    background-size: 1000px 1000px;
     z-index: -3;
     animation: moveStars 150s linear infinite;
 }
 
 .twinkling {
-    /* removed missing background image */
-    background: none;
+    background: url('../img/twinkling.png') repeat;
+    background-size: 1000px 1000px;
     opacity: 0.5;
     z-index: -2;
     animation: moveTwinkle 120s linear infinite;
 }
 
 .clouds {
-    /* removed missing background image */
-    background: none;
+    background: url('../img/clouds.png') repeat;
+    background-size: 1000px 1000px;
     opacity: 0.2;
     z-index: -1;
     animation: moveClouds 80s linear infinite;
@@ -1062,8 +1062,8 @@ a:hover {
 .data-flow-animation {
     width: 100%;
     height: 100%;
-    /* removed missing background image */
-    background: none;
+    background: url('../img/data-flow.svg') no-repeat center center;
+    background-size: contain;
     position: relative;
 }
 
