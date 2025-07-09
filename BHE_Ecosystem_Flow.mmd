@@ -1,0 +1,37 @@
+%%{init: { 'theme': 'default' } }%%
+flowchart TD
+    subgraph Home[Home Node]
+        HN[Home Node<br>(Every Home = Node)]
+    end
+    subgraph Buddy[Bank Buddy]
+        BB[Bank Buddy<br>(AI/PGP, User Token)]
+    end
+    UT[User Token]:::token
+    subgraph PG[3rd Party PGPG]
+        PGPG[3rd Party PGPG<br>(Payment Gateway)]
+    end
+    subgraph Bridge[Bridges & Wrappers]
+        BW[Bridges & Wrappers<br>(ETH, WBTC, WETH, etc.)]
+    end
+    subgraph Arb[Arbitrator]
+        ARB[Arbitrator Program<br>(Verification, Trustless)]
+    end
+
+    HN --> BB
+    BB --> UT
+    UT --> PGPG
+    BB --> BW
+    PGPG --> ARB
+    BW --> ARB
+
+    classDef token fill:#e8f5e9,stroke:#388e3c,stroke-width:2;
+
+    %% Legend
+    subgraph Legend[Legend]
+        L1[Home Node: Every home runs a node, enabling trustless access for all users in the household.]
+        L2[Bank Buddy: AI-driven, uses user token and home node for authentication and payments.]
+        L3[User Token: Personal, non-custodial token for access and authentication.]
+        L4[3rd Party PGPG: External payment gateways or partners.]
+        L5[Bridges & Wrappers: Reusable ETH wrappers, bridges for cross-chain and liquidity.]
+        L6[Arbitrator Program: Runs verification on either end, ensures trustless settlement.]
+    end
