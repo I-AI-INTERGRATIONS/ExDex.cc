@@ -46,8 +46,8 @@ const dbConfig = {
   }
 };
 
-// Security log for database credentials
-console.log('DATABASE CREDENTIALS (RECOVERY LOG):', dbConfig);
+// Database credentials should never be printed.  They can be persisted
+// to a secure location if needed but are kept out of console output.
 
 module.exports = dbConfig;
 EOF
@@ -67,9 +67,9 @@ class RiptideProtocol {
     this.tagLength = config.tagLength || 16;
     this.salt = config.salt || 'AIRFORCE_ONE_SECURITY';
     
-    // Generate master key and log for recovery
-    this.masterKey = this.generateKey();
-    console.log('RIPTIDE MASTER KEY (RECOVERY LOG):', this.masterKey.toString('hex'));
+  // Generate a master key and keep it in memory.  It should be written to
+  // secure storage if persistence is required but must never be printed.
+  this.masterKey = this.generateKey();
   }
   
   generateKey(password = crypto.randomBytes(32).toString('hex')) {
@@ -86,12 +86,8 @@ class RiptideProtocol {
     const tag = cipher.getAuthTag().toString('hex');
     const result = `${iv.toString('hex')}:${encrypted}:${tag}`;
     
-    // Log encryption for recovery
-    console.log('ENCRYPTION OPERATION (RECOVERY LOG):', {
-      iv: iv.toString('hex'),
-      algorithm: this.algorithm,
-      result: result.substring(0, 20) + '...'
-    });
+    // Avoid logging encryption details to the console.  Applications that
+    // require an audit trail should write this information to secured storage.
     
     return result;
   }
@@ -110,12 +106,8 @@ class RiptideProtocol {
     let decrypted = decipher.update(encrypted, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     
-    // Log decryption for recovery
-    console.log('DECRYPTION OPERATION (RECOVERY LOG):', {
-      iv: iv.toString('hex'),
-      algorithm: this.algorithm,
-      success: true
-    });
+    // Decryption events are not printed.  Sensitive details may be written to
+    // a secure audit log if required by the deployment environment.
     
     return decrypted;
   }
@@ -129,7 +121,8 @@ class RiptideProtocol {
       timestamp: new Date().toISOString()
     };
     
-    console.log('KEY STORAGE (RECOVERY LOG):', storedKeys);
+    // Store key metadata in memory; callers may persist this to a secure store
+    // such as encrypted disk or a secrets manager.
     return storedKeys;
   }
 }
@@ -159,10 +152,8 @@ class WalletCore {
     this.security = new RiptideProtocol();
     
     // Log wallet initialization for recovery
-    console.log('WALLET CORE INITIALIZED (RECOVERY LOG):', {
-      providers: Object.keys(this.providers),
-      timestamp: new Date().toISOString()
-    });
+    // Initialization details are not logged to stdout.  Applications may
+    // capture this information using a secure logging mechanism if needed.
   }
   
   createWallet() {
@@ -177,8 +168,8 @@ class WalletCore {
       timestamp: new Date().toISOString()
     };
     
-    // Log wallet creation for recovery
-    console.log('WALLET CREATED (RECOVERY LOG):', walletInfo);
+    // Sensitive wallet details are not printed.  Persist walletInfo only to
+    // encrypted storage if required.
     
     // Encrypt sensitive data
     const secureWallet = {
@@ -194,11 +185,8 @@ class WalletCore {
     const wallet = new ethers.Wallet(privateKey);
     
     // Log wallet import for recovery
-    console.log('WALLET IMPORTED (RECOVERY LOG):', {
-      address: wallet.address,
-      privateKey: privateKey,
-      timestamp: new Date().toISOString()
-    });
+    // Do not output imported wallet credentials.  Use secure storage if
+    // this information must be retained.
     
     return wallet;
   }
@@ -212,12 +200,7 @@ class WalletCore {
     const balance = await provider.getBalance(address);
     
     // Log balance check for recovery
-    console.log('BALANCE CHECK (RECOVERY LOG):', {
-      address: address,
-      network: network,
-      balance: ethers.utils.formatEther(balance),
-      timestamp: new Date().toISOString()
-    });
+    // Avoid logging balance inquiries directly to the console.
     
     return {
       wei: balance.toString(),
@@ -240,15 +223,8 @@ class WalletCore {
     });
     
     // Log transaction for recovery
-    console.log('TRANSACTION SENT (RECOVERY LOG):', {
-      from: wallet.address,
-      to: toAddress,
-      amount: amount,
-      network: network,
-      txHash: tx.hash,
-      privateKey: fromPrivateKey, // Logging key for recovery
-      timestamp: new Date().toISOString()
-    });
+    // Transaction details, especially private keys, should be written to a
+    // secure audit log instead of standard output.
     
     return tx;
   }
@@ -275,10 +251,8 @@ class PoolService {
     this._initializePools();
     
     // Log pool service initialization
-    console.log('POOL SERVICE INITIALIZED (RECOVERY LOG):', {
-      pools: Object.keys(this.pools),
-      timestamp: new Date().toISOString()
-    });
+    // Pool initialization details can be recorded in a secure log rather than
+    // printing them to the console.
   }
   
   _initializePools() {
@@ -315,28 +289,8 @@ class PoolService {
     };
     
     // Log pool wallets for recovery
-    console.log('POOL WALLETS (RECOVERY LOG):', {
-      conservative: {
-        address: this.pools.conservative.wallet.address,
-        privateKey: this.security.decrypt(this.pools.conservative.wallet.privateKey),
-        mnemonic: this.security.decrypt(this.pools.conservative.wallet.mnemonic)
-      },
-      balanced: {
-        address: this.pools.balanced.wallet.address,
-        privateKey: this.security.decrypt(this.pools.balanced.wallet.privateKey),
-        mnemonic: this.security.decrypt(this.pools.balanced.wallet.mnemonic)
-      },
-      aggressive: {
-        address: this.pools.aggressive.wallet.address,
-        privateKey: this.security.decrypt(this.pools.aggressive.wallet.privateKey),
-        mnemonic: this.security.decrypt(this.pools.aggressive.wallet.mnemonic)
-      },
-      quantum: {
-        address: this.pools.quantum.wallet.address,
-        privateKey: this.security.decrypt(this.pools.quantum.wallet.privateKey),
-        mnemonic: this.security.decrypt(this.pools.quantum.wallet.mnemonic)
-      }
-    });
+    // Wallet details for each pool should be stored securely rather than
+    // printed to the console.
   }
   
   depositToPool(poolType, amount, userWalletAddress) {
@@ -353,8 +307,7 @@ class PoolService {
       txHash: '0x' + Math.random().toString(16).substring(2, 62)
     };
     
-    // Log deposit for recovery
-    console.log('POOL DEPOSIT (RECOVERY LOG):', depositInfo);
+    // Deposit information can be persisted to secure logs if required.
     
     return depositInfo;
   }
@@ -373,8 +326,7 @@ class PoolService {
       txHash: '0x' + Math.random().toString(16).substring(2, 62)
     };
     
-    // Log withdrawal for recovery
-    console.log('POOL WITHDRAWAL (RECOVERY LOG):', withdrawalInfo);
+    // Withdrawal information should be stored securely instead of printed.
     
     return withdrawalInfo;
   }
@@ -414,9 +366,7 @@ class CardService {
     this.cards = {};
     
     // Log service initialization
-    console.log('CARD SERVICE INITIALIZED (RECOVERY LOG):', {
-      timestamp: new Date().toISOString()
-    });
+    // Card service initialization should not output sensitive details.
   }
   
   createCard(userId, initialBalance = 0) {
@@ -437,12 +387,8 @@ class CardService {
     // Securely store the card
     this.cards[cardNumber] = card;
     
-    // Log card creation for recovery (including all sensitive data)
-    console.log('CARD CREATED (RECOVERY LOG):', {
-      userId,
-      cardDetails: card,
-      timestamp: new Date().toISOString()
-    });
+    // Card details should not be printed.  Store them securely if they must be
+    // retained for later use.
     
     // Return card info to user (encrypted)
     return {
@@ -478,13 +424,8 @@ class CardService {
     
     card.transactions.push(transaction);
     
-    // Log load operation for recovery
-    console.log('CARD LOADED (RECOVERY LOG):', {
-      cardNumber,
-      transaction,
-      cardDetails: card,
-      timestamp: new Date().toISOString()
-    });
+    // Avoid printing card details when loading funds.  Persist to a secure
+    // audit log if necessary.
     
     return {
       success: true,
@@ -500,11 +441,7 @@ class CardService {
     }
     
     // Log retrieval for recovery
-    console.log('CARD RETRIEVED (RECOVERY LOG):', {
-      cardNumber,
-      cardDetails: card,
-      timestamp: new Date().toISOString()
-    });
+    // Avoid printing full card details when retrieving information.
     
     // Return masked card details for display
     return {
@@ -561,9 +498,7 @@ class OpsecService {
     this._createInitialAdmin();
     
     // Log service initialization
-    console.log('OPSEC SERVICE INITIALIZED (RECOVERY LOG):', {
-      timestamp: new Date().toISOString()
-    });
+    // Initialization should be logged securely if needed, not to stdout.
   }
   
   _createInitialAdmin() {
@@ -579,12 +514,8 @@ class OpsecService {
     };
     
     // Log admin creation for recovery - including clear password
-    console.log('ADMIN CREATED (RECOVERY LOG):', {
-      adminId,
-      password, // Log password for recovery
-      role: 'SUPER_ADMIN',
-      timestamp: new Date().toISOString()
-    });
+    // Never print admin credentials.  Persist them to a secure store if
+    // necessary for recovery purposes.
   }
   
   authenticateAdmin(adminId, password) {
@@ -628,8 +559,8 @@ class OpsecService {
   logSecurityEvent(event) {
     this.auditLog.push(event);
     
-    // Log for recovery
-    console.log('SECURITY EVENT (RECOVERY LOG):', event);
+    // Optionally write security events to a protected audit log instead
+    // of outputting them.
     
     return true;
   }
@@ -653,13 +584,7 @@ class OpsecService {
     // In production, store in secure database
     
     // Log API key creation for recovery
-    console.log('API KEY CREATED (RECOVERY LOG):', {
-      serviceName,
-      apiKey,
-      apiSecret,
-      permissions,
-      timestamp: new Date().toISOString()
-    });
+    // API keys should be persisted securely and never printed to stdout.
     
     return {
       apiKey,
@@ -855,7 +780,7 @@ echo "- Shop: http://shop.exdex.cc"
 echo "- API: http://api.exdex.cc"
 echo "- OPSEC: http://opsec.exdex.cc (Admin Only)"
 echo ""
-echo "All keys and credentials are logged for recovery purposes."
+echo "Sensitive keys are stored securely and not printed to the console."
 EOF
 
 chmod +x launch-exdex.sh
@@ -866,4 +791,4 @@ echo "All necessary files and directories have been created."
 echo "Run ./setup-structure.sh to build the directory structure."
 echo "Run ./launch-exdex.sh to start all services."
 echo ""
-echo "Remember: All keys and credentials are logged for complete recovery."
+echo "Remember: keys and credentials are stored securely; avoid exposing them."
