@@ -1007,24 +1007,24 @@ a:hover {
     font-style: italic;
 }
 
-/* DRIPTIDE Section */
-.driptide-container {
+/* RIPTIDE Section */
+.riptide-container {
     display: flex;
     gap: 3rem;
     align-items: center;
 }
 
-.driptide-explanation {
+.riptide-explanation {
     flex: 1;
 }
 
-.driptide-intro {
+.riptide-intro {
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 2rem;
 }
 
-.driptide-applications {
+.riptide-applications {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
@@ -1053,7 +1053,7 @@ a:hover {
     -webkit-text-fill-color: transparent;
 }
 
-.driptide-visualization {
+.riptide-visualization {
     flex: 1;
     height: 500px;
     position: relative;
@@ -1200,13 +1200,13 @@ a:hover {
     
     .card-showcase,
     .vault-container,
-    .driptide-container {
+    .riptide-container {
         flex-direction: column;
     }
     
     .card-images,
     .vault-graphic,
-    .driptide-visualization {
+    .riptide-visualization {
         margin-bottom: 2rem;
     }
 }
@@ -1270,7 +1270,7 @@ a:hover {
     .pools-container,
     .investment-grid,
     .vault-features,
-    .driptide-applications {
+    .riptide-applications {
         grid-template-columns: 1fr;
     }
     
