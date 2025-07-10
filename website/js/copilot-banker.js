@@ -1,5 +1,5 @@
-// Samantha.js: Local AI Banking Assistant Frontend
-const API_URL = 'http://127.0.0.1:8000';
+// Copilot Banker: AI-powered assistant using Cortana voice
+const API_URL = window.EXDEX_API_URL || 'http://127.0.0.1:8000';
 
 const chatLog = document.getElementById('samantha-chat-log');
 const chatForm = document.getElementById('samantha-chat-form');
@@ -11,7 +11,7 @@ const walletSendBtn = document.getElementById('samantha-wallet-send');
 
 function appendMessage(author, msg) {
     const el = document.createElement('div');
-    el.innerHTML = `<strong style="color:${author==='Samantha'?'#3e4bff':'#fff'};">${author}:</strong> <span>${msg}</span>`;
+    el.innerHTML = `<strong style="color:${author==='Copilot Banker'?'#3e4bff':'#fff'};">${author}:</strong> <span>${msg}</span>`;
     el.style.marginBottom = '7px';
     chatLog.appendChild(el);
     chatLog.scrollTop = chatLog.scrollHeight;
@@ -24,14 +24,14 @@ chatForm.addEventListener('submit', async (e) => {
     if (!msg) return;
     appendMessage('You', msg);
     chatInput.value = '';
-    appendMessage('Samantha', '<em>Thinking...</em>');
+    appendMessage('Copilot Banker', '<em>Thinking...</em>');
     const resp = await fetch(`${API_URL}/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg })
     });
     const data = await resp.json();
-    chatLog.lastChild.innerHTML = `<strong style="color:#3e4bff;">Samantha:</strong> <span>${data.response}</span>`;
+    chatLog.lastChild.innerHTML = `<strong style="color:#3e4bff;">Copilot Banker:</strong> <span>${data.response}</span>`;
     // Optionally, play TTS
     playTTS(data.response);
 });
@@ -84,28 +84,28 @@ async function playTTS(text) {
 walletCreateBtn.addEventListener('click', async () => {
     const blockchain = prompt('Create wallet for which blockchain? (btc/eth)');
     if (!blockchain) return;
-    appendMessage('Samantha', '<em>Creating wallet...</em>');
+    appendMessage('Copilot Banker', '<em>Creating wallet...</em>');
     const resp = await fetch(`${API_URL}/wallet/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ blockchain })
     });
     const data = await resp.json();
-    appendMessage('Samantha', `Address: <code>${data.address}</code><br>Mnemonic: <code>${data.mnemonic}</code>`);
+    appendMessage('Copilot Banker', `Address: <code>${data.address}</code><br>Mnemonic: <code>${data.mnemonic}</code>`);
 });
 
 walletRecoverBtn.addEventListener('click', async () => {
     const blockchain = prompt('Recover wallet for which blockchain? (btc/eth)');
     const mnemonic = prompt('Enter your mnemonic phrase:');
     if (!blockchain || !mnemonic) return;
-    appendMessage('Samantha', '<em>Recovering wallet...</em>');
+    appendMessage('Copilot Banker', '<em>Recovering wallet...</em>');
     const resp = await fetch(`${API_URL}/wallet/recover`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ blockchain, mnemonic })
     });
     const data = await resp.json();
-    appendMessage('Samantha', `Recovered Address: <code>${data.address}</code>`);
+    appendMessage('Copilot Banker', `Recovered Address: <code>${data.address}</code>`);
 });
 
 walletSendBtn.addEventListener('click', async () => {
@@ -115,12 +115,12 @@ walletSendBtn.addEventListener('click', async () => {
     const amount = prompt('Amount:');
     const private_key = prompt('Private key:');
     if (!blockchain || !from_address || !to_address || !amount || !private_key) return;
-    appendMessage('Samantha', '<em>Sending transaction...</em>');
+    appendMessage('Copilot Banker', '<em>Sending transaction...</em>');
     const resp = await fetch(`${API_URL}/wallet/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ blockchain, from_address, to_address, amount: parseFloat(amount), private_key })
     });
     const data = await resp.json();
-    appendMessage('Samantha', `Transaction ID: <code>${data.txid}</code> Status: ${data.status}`);
+    appendMessage('Copilot Banker', `Transaction ID: <code>${data.txid}</code> Status: ${data.status}`);
 });

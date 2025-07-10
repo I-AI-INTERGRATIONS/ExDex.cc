@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     initAnimations();
-    logAllTransactions(); // DRIPTIDE protocol logging
+    logAllTransactions(); // RIPTIDE protocol logging
     createSecurityVerification(); // Security controller
 });
 
@@ -191,7 +191,7 @@ async function initWalletConnection(knox) {
                 // Add connected class
                 connectWalletButton.classList.add('connected');
                 
-                // Log the connection (for DRIPTIDE)
+                // Log the connection (for RIPTIDE)
                 console.log(`Wallet connected: ${account}`);
                 
                 // Show success notification
@@ -343,10 +343,10 @@ function initAnimations() {
     });
 }
 
-// DRIPTIDE Protocol integration
+// RIPTIDE Protocol integration
 function logAllTransactions() {
-    // Simulated function to demonstrate DRIPTIDE data tokenization
-    console.log('DRIPTIDE Protocol: Monitoring system initialized');
+    // Simulated function to demonstrate RIPTIDE data tokenization
+    console.log('RIPTIDE Protocol: Monitoring system initialized');
     
     // In a real implementation, this would capture transaction data
     // and create tokenized data assets on the blockchain
@@ -354,7 +354,7 @@ function logAllTransactions() {
         const timestamp = new Date().toISOString();
         const securePGPEncryption = true; // Simulate encryption
         
-        console.log(`DRIPTIDE: Capturing ${action} at ${timestamp}`);
+        console.log(`RIPTIDE: Capturing ${action} at ${timestamp}`);
         
         // Hash calculation (simulated)
         const actionHash = `0x${Array.from(timestamp + action + JSON.stringify(data)).reduce((acc, char) => 
