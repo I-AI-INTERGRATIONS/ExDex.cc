@@ -11,7 +11,14 @@ const walletSendBtn = document.getElementById('samantha-wallet-send');
 
 function appendMessage(author, msg) {
     const el = document.createElement('div');
-    el.innerHTML = `<strong style="color:${author==='Copilot Banker'?'#3e4bff':'#fff'};">${author}:</strong> <span>${msg}</span>`;
+    const authorEl = document.createElement('strong');
+    authorEl.style.color = author === 'Copilot Banker' ? '#3e4bff' : '#fff';
+    authorEl.textContent = `${author}:`;
+    const msgEl = document.createElement('span');
+    msgEl.textContent = msg;
+    el.appendChild(authorEl);
+    el.appendChild(document.createTextNode(' ')); // Add a space between author and message
+    el.appendChild(msgEl);
     el.style.marginBottom = '7px';
     chatLog.appendChild(el);
     chatLog.scrollTop = chatLog.scrollHeight;
@@ -31,7 +38,16 @@ chatForm.addEventListener('submit', async (e) => {
         body: JSON.stringify({ message: msg })
     });
     const data = await resp.json();
-    chatLog.lastChild.innerHTML = `<strong style="color:#3e4bff;">Copilot Banker:</strong> <span>${data.response}</span>`;
+    const lastChild = chatLog.lastChild;
+    lastChild.textContent = ''; // Clear existing content
+    const authorEl = document.createElement('strong');
+    authorEl.style.color = '#3e4bff';
+    authorEl.textContent = 'Copilot Banker:';
+    const responseEl = document.createElement('span');
+    responseEl.textContent = data.response;
+    lastChild.appendChild(authorEl);
+    lastChild.appendChild(document.createTextNode(' ')); // Add a space between author and response
+    lastChild.appendChild(responseEl);
     // Optionally, play TTS
     playTTS(data.response);
 });
@@ -91,7 +107,7 @@ walletCreateBtn.addEventListener('click', async () => {
         body: JSON.stringify({ blockchain })
     });
     const data = await resp.json();
-    appendMessage('Copilot Banker', `Address: <code>${data.address}</code><br>Mnemonic: <code>${data.mnemonic}</code>`);
+    appendMessage('Copilot Banker', `Address: ${data.address}\nMnemonic: ${data.mnemonic}`);
 });
 
 walletRecoverBtn.addEventListener('click', async () => {
@@ -122,5 +138,5 @@ walletSendBtn.addEventListener('click', async () => {
         body: JSON.stringify({ blockchain, from_address, to_address, amount: parseFloat(amount), private_key })
     });
     const data = await resp.json();
-    appendMessage('Copilot Banker', `Transaction ID: <code>${data.txid}</code> Status: ${data.status}`);
+    appendMessage('Copilot Banker', `Transaction ID: ${data.txid} Status: ${data.status}`);
 });
