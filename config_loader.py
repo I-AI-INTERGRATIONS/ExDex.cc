@@ -7,7 +7,7 @@ Reads JOHN.ini and provides configuration access with validation
 import configparser
 import os
 import sys
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 
 class ExDexConfig:
@@ -77,7 +77,7 @@ class ExDexConfig:
             for warning in warnings:
                 print(f"  - {warning}", file=sys.stderr)
     
-    def get(self, section: str, key: str, fallback: Optional[str] = None) -> str:
+    def get(self, section: str, key: str, fallback: Optional[str] = None) -> Optional[str]:
         """
         Get a configuration value
         
@@ -87,7 +87,7 @@ class ExDexConfig:
             fallback: Default value if key not found
             
         Returns:
-            Configuration value or fallback
+            Configuration value or fallback (can be None)
         """
         # Check environment variable override first
         env_key = f"{section}_{key}".upper()
@@ -132,12 +132,22 @@ class ExDexConfig:
             return fallback
     
     def getboolean(self, section: str, key: str, fallback: Optional[bool] = None) -> Optional[bool]:
-        """Get a boolean configuration value"""
+        """
+        Get a boolean configuration value
+        
+        Environment variables are considered True if they are: true, yes, 1, on
+        and False if they are: false, no, 0, off (case-insensitive)
+        """
         # Check environment variable override first
         env_key = f"{section}_{key}".upper()
         env_value = os.getenv(env_key)
         if env_value is not None:
-            return env_value.lower() in ('true', 'yes', '1', 'on')
+            env_lower = env_value.lower()
+            if env_lower in ('true', 'yes', '1', 'on'):
+                return True
+            elif env_lower in ('false', 'no', '0', 'off'):
+                return False
+            # If not recognized, fall through to config file
         
         # Try to get from config file
         try:
@@ -163,7 +173,7 @@ class ExDexConfig:
         """Check if a section exists"""
         return self.config.has_section(section)
     
-    def sections(self) -> list:
+    def sections(self) -> List[str]:
         """Get all section names"""
         return self.config.sections()
 
