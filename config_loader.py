@@ -4,6 +4,7 @@ Configuration loader and validator for ExDex.cc
 Reads JOHN.ini and provides configuration access with validation
 """
 
+import argparse
 import configparser
 import os
 import sys
@@ -173,7 +174,7 @@ class ExDexConfig:
         except (configparser.NoSectionError, configparser.NoOptionError, ValueError):
             return fallback
     
-    def get_section(self, section: str) -> Dict[str, Any]:
+    def get_section(self, section: str) -> Dict[str, str]:
         """
         Get all key-value pairs from a section
         
@@ -203,8 +204,6 @@ class ExDexConfig:
 
 def main():
     """CLI tool to validate and display configuration"""
-    import argparse
-    
     parser = argparse.ArgumentParser(description='ExDex Configuration Tool')
     parser.add_argument('--file', default='JOHN.ini', help='Configuration file path')
     parser.add_argument('--validate', action='store_true', help='Validate configuration')

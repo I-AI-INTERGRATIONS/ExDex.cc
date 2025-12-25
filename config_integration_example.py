@@ -33,7 +33,10 @@ if config:
     DEBUG_MODE = config.getboolean('SERVER', 'debug', False)
 else:
     SERVER_HOST = os.getenv('SERVER_HOST', '127.0.0.1')
-    SERVER_PORT = int(os.getenv('SERVER_PORT', '8000'))
+    try:
+        SERVER_PORT = int(os.getenv('SERVER_PORT', '8000'))
+    except ValueError:
+        SERVER_PORT = 8000  # Fallback to default if invalid
     DEBUG_MODE = os.getenv('DEBUG', 'false').lower() == 'true'
 
 # Example: Get CoinPayments API keys

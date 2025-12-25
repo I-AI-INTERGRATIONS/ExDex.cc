@@ -47,8 +47,8 @@ log_file = opsec_log.txt
 log_level = INFO
 # Double %% is required in INI files because ConfigParser uses % for interpolation
 # The double %% will be converted to single % when read by ConfigParser
-# Result: %(asctime)s %(message)s (valid Python logging format string)
-log_format = %%(asctime)s %%(message)s
+# Production format includes: timestamp, logger name, level, and message
+log_format = %%(asctime)s - %%(name)s - %%(levelname)s - %%(message)s
 
 [SECURITY]
 api_key_salt = CHANGE_ME_RANDOM_SALT
