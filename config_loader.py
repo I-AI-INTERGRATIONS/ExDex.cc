@@ -54,14 +54,22 @@ class ExDexConfig:
         # Check for unchanged placeholder values
         warnings = []
         
-        if self.config.get('BLOCKCHAIN_ETH', 'infura_url').startswith('https://mainnet.infura.io/v3/YOUR_'):
-            warnings.append("BLOCKCHAIN_ETH.infura_url still contains placeholder value")
+        # Check BLOCKCHAIN_ETH section if it exists
+        if self.config.has_section('BLOCKCHAIN_ETH'):
+            infura_url = self.config.get('BLOCKCHAIN_ETH', 'infura_url', fallback='')
+            if infura_url.startswith('https://mainnet.infura.io/v3/YOUR_'):
+                warnings.append("BLOCKCHAIN_ETH.infura_url still contains placeholder value")
         
-        if 'CHANGE_ME' in self.config.get('SECURITY', 'jwt_secret', fallback=''):
-            warnings.append("SECURITY.jwt_secret should be changed from default")
+        # Check SECURITY section if it exists
+        if self.config.has_section('SECURITY'):
+            jwt_secret = self.config.get('SECURITY', 'jwt_secret', fallback='')
+            if 'CHANGE_ME' in jwt_secret:
+                warnings.append("SECURITY.jwt_secret should be changed from default")
         
+        # Check PAYMENT_COINPAYMENTS section if it exists
         if self.config.has_section('PAYMENT_COINPAYMENTS'):
-            if 'YOUR_' in self.config.get('PAYMENT_COINPAYMENTS', 'public_key', fallback=''):
+            public_key = self.config.get('PAYMENT_COINPAYMENTS', 'public_key', fallback='')
+            if 'YOUR_' in public_key:
                 warnings.append("PAYMENT_COINPAYMENTS.public_key contains placeholder")
         
         if warnings:
@@ -95,7 +103,10 @@ class ExDexConfig:
         env_key = f"{section}_{key}".upper()
         env_value = os.getenv(env_key)
         if env_value is not None:
-            return int(env_value)
+            try:
+                return int(env_value)
+            except (ValueError, TypeError):
+                pass  # Fall through to config file
         
         # Try to get from config file
         try:
@@ -109,7 +120,10 @@ class ExDexConfig:
         env_key = f"{section}_{key}".upper()
         env_value = os.getenv(env_key)
         if env_value is not None:
-            return float(env_value)
+            try:
+                return float(env_value)
+            except (ValueError, TypeError):
+                pass  # Fall through to config file
         
         # Try to get from config file
         try:
