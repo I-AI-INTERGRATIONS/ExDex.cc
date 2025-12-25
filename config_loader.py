@@ -91,22 +91,45 @@ class ExDexConfig:
     
     def getint(self, section: str, key: str, fallback: Optional[int] = None) -> Optional[int]:
         """Get an integer configuration value"""
-        value = self.get(section, key, str(fallback) if fallback is not None else None)
-        if value is None:
+        # Check environment variable override first
+        env_key = f"{section}_{key}".upper()
+        env_value = os.getenv(env_key)
+        if env_value is not None:
+            return int(env_value)
+        
+        # Try to get from config file
+        try:
+            return self.config.getint(section, key)
+        except (configparser.NoSectionError, configparser.NoOptionError, ValueError):
             return fallback
-        return int(value)
     
     def getfloat(self, section: str, key: str, fallback: Optional[float] = None) -> Optional[float]:
         """Get a float configuration value"""
-        value = self.get(section, key, str(fallback) if fallback is not None else None)
-        if value is None:
+        # Check environment variable override first
+        env_key = f"{section}_{key}".upper()
+        env_value = os.getenv(env_key)
+        if env_value is not None:
+            return float(env_value)
+        
+        # Try to get from config file
+        try:
+            return self.config.getfloat(section, key)
+        except (configparser.NoSectionError, configparser.NoOptionError, ValueError):
             return fallback
-        return float(value)
     
-    def getboolean(self, section: str, key: str, fallback: bool = False) -> bool:
+    def getboolean(self, section: str, key: str, fallback: Optional[bool] = None) -> Optional[bool]:
         """Get a boolean configuration value"""
-        value = self.get(section, key, str(fallback))
-        return value.lower() in ('true', 'yes', '1', 'on')
+        # Check environment variable override first
+        env_key = f"{section}_{key}".upper()
+        env_value = os.getenv(env_key)
+        if env_value is not None:
+            return env_value.lower() in ('true', 'yes', '1', 'on')
+        
+        # Try to get from config file
+        try:
+            return self.config.getboolean(section, key)
+        except (configparser.NoSectionError, configparser.NoOptionError, ValueError):
+            return fallback
     
     def get_section(self, section: str) -> Dict[str, Any]:
         """
