@@ -13,6 +13,9 @@ from typing import Any, Dict, List, Optional
 class ExDexConfig:
     """Configuration loader for ExDex backend services"""
     
+    # Keywords that indicate sensitive configuration values
+    SENSITIVE_KEYWORDS = ['key', 'secret', 'password']
+    
     def __init__(self, config_file: str = "JOHN.ini"):
         """
         Initialize configuration loader
@@ -41,10 +44,10 @@ class ExDexConfig:
             'SECURITY'
         ]
         
-        missing_sections = []
-        for section in required_sections:
-            if not self.config.has_section(section):
-                missing_sections.append(section)
+        missing_sections = [
+            section for section in required_sections 
+            if not self.config.has_section(section)
+        ]
         
         if missing_sections:
             raise ValueError(
@@ -90,6 +93,7 @@ class ExDexConfig:
             Configuration value or fallback (can be None)
         """
         # Check environment variable override first
+        # Empty strings from env vars are treated as intentional values
         env_key = f"{section}_{key}".upper()
         env_value = os.getenv(env_key)
         if env_value is not None:
@@ -204,7 +208,7 @@ def main():
                 print(f"[{args.section}]")
                 for key, value in section_data.items():
                     # Redact sensitive values
-                    if any(sensitive in key.lower() for sensitive in ['key', 'secret', 'password']):
+                    if any(sensitive in key.lower() for sensitive in ExDexConfig.SENSITIVE_KEYWORDS):
                         value = '***REDACTED***'
                     print(f"{key} = {value}")
             else:
@@ -217,7 +221,7 @@ def main():
                 print(f"\n[{section}]")
                 section_data = config.get_section(section)
                 for key, value in section_data.items():
-                    if any(sensitive in key.lower() for sensitive in ['key', 'secret', 'password']):
+                    if any(sensitive in key.lower() for sensitive in ExDexConfig.SENSITIVE_KEYWORDS):
                         value = '***REDACTED***'
                     print(f"  {key} = {value}")
             return 0

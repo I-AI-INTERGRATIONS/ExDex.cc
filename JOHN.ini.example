@@ -45,6 +45,8 @@ llm_script = run_local_llm.py
 [LOGGING]
 log_file = opsec_log.txt
 log_level = INFO
+# Note: Double %% is required in INI files - ConfigParser will convert to single %
+# This produces the format string: %(asctime)s %(message)s
 log_format = %%(asctime)s %%(message)s
 
 [SECURITY]
