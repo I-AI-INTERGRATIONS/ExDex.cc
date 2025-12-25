@@ -89,15 +89,19 @@ class ExDexConfig:
         
         return self.config.get(section, key, fallback=fallback)
     
-    def getint(self, section: str, key: str, fallback: Optional[int] = None) -> int:
+    def getint(self, section: str, key: str, fallback: Optional[int] = None) -> Optional[int]:
         """Get an integer configuration value"""
         value = self.get(section, key, str(fallback) if fallback is not None else None)
-        return int(value) if value is not None else fallback
+        if value is None:
+            return fallback
+        return int(value)
     
-    def getfloat(self, section: str, key: str, fallback: Optional[float] = None) -> float:
+    def getfloat(self, section: str, key: str, fallback: Optional[float] = None) -> Optional[float]:
         """Get a float configuration value"""
         value = self.get(section, key, str(fallback) if fallback is not None else None)
-        return float(value) if value is not None else fallback
+        if value is None:
+            return fallback
+        return float(value)
     
     def getboolean(self, section: str, key: str, fallback: bool = False) -> bool:
         """Get a boolean configuration value"""
