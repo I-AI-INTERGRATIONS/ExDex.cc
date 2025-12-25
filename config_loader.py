@@ -14,7 +14,7 @@ class ExDexConfig:
     """Configuration loader for ExDex backend services"""
     
     # Keywords that indicate sensitive configuration values
-    SENSITIVE_KEYWORDS = ['key', 'secret', 'password']
+    SENSITIVE_KEYWORDS = ['key', 'secret', 'password', 'token', 'salt', 'encryption']
     
     def __init__(self, config_file: str = "JOHN.ini"):
         """
@@ -80,6 +80,20 @@ class ExDexConfig:
             for warning in warnings:
                 print(f"  - {warning}", file=sys.stderr)
     
+    def _get_env_override(self, section: str, key: str) -> Optional[str]:
+        """
+        Check for environment variable override
+        
+        Args:
+            section: Configuration section
+            key: Configuration key
+            
+        Returns:
+            Environment variable value if set, otherwise None
+        """
+        env_key = f"{section}_{key}".upper()
+        return os.getenv(env_key)
+    
     def get(self, section: str, key: str, fallback: Optional[str] = None) -> Optional[str]:
         """
         Get a configuration value
@@ -98,8 +112,7 @@ class ExDexConfig:
             config values via environment variables.
         """
         # Check environment variable override first
-        env_key = f"{section}_{key}".upper()
-        env_value = os.getenv(env_key)
+        env_value = self._get_env_override(section, key)
         if env_value is not None:
             return env_value
         
@@ -108,8 +121,7 @@ class ExDexConfig:
     def getint(self, section: str, key: str, fallback: Optional[int] = None) -> Optional[int]:
         """Get an integer configuration value"""
         # Check environment variable override first
-        env_key = f"{section}_{key}".upper()
-        env_value = os.getenv(env_key)
+        env_value = self._get_env_override(section, key)
         if env_value is not None:
             try:
                 return int(env_value)
@@ -125,8 +137,7 @@ class ExDexConfig:
     def getfloat(self, section: str, key: str, fallback: Optional[float] = None) -> Optional[float]:
         """Get a float configuration value"""
         # Check environment variable override first
-        env_key = f"{section}_{key}".upper()
-        env_value = os.getenv(env_key)
+        env_value = self._get_env_override(section, key)
         if env_value is not None:
             try:
                 return float(env_value)
@@ -147,8 +158,7 @@ class ExDexConfig:
         and False if they are: false, no, 0, off (case-insensitive)
         """
         # Check environment variable override first
-        env_key = f"{section}_{key}".upper()
-        env_value = os.getenv(env_key)
+        env_value = self._get_env_override(section, key)
         if env_value is not None:
             env_lower = env_value.lower()
             if env_lower in ('true', 'yes', '1', 'on'):

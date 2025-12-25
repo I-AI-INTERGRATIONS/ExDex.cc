@@ -13,9 +13,9 @@ import os
 # It will fall back to environment variables if config file is not found
 try:
     config = ExDexConfig("JOHN.ini")
-    print("Configuration loaded from JOHN.ini")  # Use print until logging is configured
 except FileNotFoundError:
-    print("Warning: JOHN.ini not found, using environment variables only")
+    # In production, you would configure proper logging here
+    # For this example, config will be None and env vars will be used
     config = None
 
 app = FastAPI()
