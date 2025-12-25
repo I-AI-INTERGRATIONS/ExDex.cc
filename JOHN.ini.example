@@ -1,0 +1,75 @@
+# ExDex.cc Configuration Example
+# Copy this file to JOHN.ini and fill in your actual values
+# This example shows the structure and all available configuration options
+
+[SERVER]
+host = 127.0.0.1
+port = 8000
+debug = false
+base_url = http://127.0.0.1:8000
+cors_origins = http://localhost:3000,http://127.0.0.1:3000
+
+[BLOCKCHAIN_BTC]
+network = bitcoin
+witness_type = segwit
+wallet_name = BHE_BTC_WALLET
+
+[BLOCKCHAIN_ETH]
+infura_url = https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID
+chain_id = 1
+gas_limit = 21000
+
+[BLOCKCHAIN_LTC]
+network = litecoin
+
+[BLOCKCHAIN_DOGE]
+network = dogecoin
+
+[PAYMENT_COINPAYMENTS]
+public_key = YOUR_COINPAYMENTS_PUBLIC_KEY
+private_key = YOUR_COINPAYMENTS_PRIVATE_KEY
+ipn_url = /ipn
+success_url = /success
+cancel_url = /cancel
+
+[PAYMENT_CARD]
+card_bin = 420769
+ppc_url = http://127.0.0.1:9000/ppc/process
+ppc_timeout = 10
+
+[AI_SERVICES]
+vosk_asr_script = run_vosk_asr.py
+tts_script = run_local_tts.py
+llm_script = run_local_llm.py
+
+[LOGGING]
+log_file = opsec_log.txt
+log_level = INFO
+# Double %% is required in INI files because ConfigParser uses % for interpolation
+# The double %% will be converted to single % when read by ConfigParser
+# Production format includes: timestamp, logger name, level, and message
+log_format = %%(asctime)s - %%(name)s - %%(levelname)s - %%(message)s
+
+[SECURITY]
+api_key_salt = CHANGE_ME_RANDOM_SALT
+jwt_secret = CHANGE_ME_JWT_SECRET
+encryption_key = CHANGE_ME_ENCRYPTION_KEY
+
+[WALLET_KNOX]
+enabled = true
+type = knox
+
+[API_ENDPOINTS]
+blockchain_info_url = https://blockchain.info
+etherscan_api_key = YOUR_ETHERSCAN_API_KEY
+
+[FEATURES]
+enable_btc = true
+enable_eth = true
+enable_ltc = true
+enable_doge = true
+enable_ai_chat = true
+enable_speech_to_text = true
+enable_text_to_speech = true
+enable_card_generation = true
+enable_rich_list = true
