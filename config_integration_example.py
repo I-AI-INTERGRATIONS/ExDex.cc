@@ -8,15 +8,14 @@ instead of hardcoded values or environment variables only.
 from fastapi import FastAPI
 from config_loader import ExDexConfig
 import os
-import logging
 
 # Initialize the configuration loader
 # It will fall back to environment variables if config file is not found
 try:
     config = ExDexConfig("JOHN.ini")
-    logging.info("Configuration loaded from JOHN.ini")
+    print("Configuration loaded from JOHN.ini")  # Use print until logging is configured
 except FileNotFoundError:
-    logging.warning("JOHN.ini not found, using environment variables only")
+    print("Warning: JOHN.ini not found, using environment variables only")
     config = None
 
 app = FastAPI()

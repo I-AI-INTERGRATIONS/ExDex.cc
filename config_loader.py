@@ -91,9 +91,13 @@ class ExDexConfig:
             
         Returns:
             Configuration value or fallback (can be None)
+            
+        Note:
+            Environment variables set to empty strings will override the config file
+            with an empty string. This is intentional to allow explicitly clearing
+            config values via environment variables.
         """
         # Check environment variable override first
-        # Empty strings from env vars are treated as intentional values
         env_key = f"{section}_{key}".upper()
         env_value = os.getenv(env_key)
         if env_value is not None:
@@ -168,6 +172,11 @@ class ExDexConfig:
             
         Returns:
             Dictionary of configuration values
+            
+        Note:
+            This method returns raw config file values and does not apply
+            environment variable overrides. Use individual get() methods
+            for keys that need environment variable override support.
         """
         if not self.config.has_section(section):
             return {}
