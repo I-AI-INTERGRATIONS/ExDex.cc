@@ -1,0 +1,126 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Make security scanner executable
+      run: chmod +x scripts/security-scan.sh
+      
+    - name: Run security scan
+      run: |
+        echo "Running ExDex.cc Security Scanner..."
+        ./scripts/security-scan.sh
+        SCAN_EXIT_CODE=$?
+        
+        if [ $SCAN_EXIT_CODE -eq 1 ]; then
+          echo "❌ CRITICAL security issues found! Cannot proceed with deployment."
+          echo "::error::Critical security vulnerabilities detected. Please fix before merging."
+          exit 1
+        elif [ $SCAN_EXIT_CODE -eq 2 ]; then
+          echo "⚠️ HIGH RISK security issues found."
+          echo "::warning::High risk security issues detected. Review before merging."
+          exit 0  # Allow but warn
+        elif [ $SCAN_EXIT_CODE -eq 3 ]; then
+          echo "⚠️ MEDIUM RISK security issues found."
+          echo "::warning::Medium risk security issues detected. Consider fixing."
+          exit 0  # Allow but warn
+        else
+          echo "✅ Security scan passed!"
+          exit 0
+        fi
+        
+    - name: Upload security scan results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-scan-results
+        path: |
+          security-scan-*.log
+          scripts/security-scan.sh
+        retention-days: 30
+
+  prevent-sensitive-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Check for common secrets patterns
+      run: |
+        echo "Scanning for common secret patterns..."
+        
+        # Check for AWS keys
+        if grep -r "AKIA[0-9A-Z]{16}" . --exclude-dir=.git; then
+          echo "::error::AWS Access Key detected!"
+          exit 1
+        fi
+        
+        # Check for private keys
+        if grep -r "BEGIN.*PRIVATE.*KEY" . --exclude-dir=.git; then
+          echo "::error::Private key detected!"
+          exit 1
+        fi
+        
+        # Check for common password patterns
+        if grep -r "password.*=" . --include="*.js" --include="*.json" | grep -v "example\|demo\|test"; then
+          echo "::warning::Potential password found in code"
+        fi
+        
+        echo "✅ Basic secret pattern check completed"
+
+  validate-config:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Validate configuration files
+      run: |
+        echo "Validating configuration structure..."
+        
+        # Check that config-example.js exists but config.js doesn't
+        if [ ! -f "website/js/config-example.js" ]; then
+          echo "::error::Missing config-example.js template"
+          exit 1
+        fi
+        
+        if [ -f "website/js/config.js" ]; then
+          echo "::error::config.js should not be committed (should be in .gitignore)"
+          exit 1
+        fi
+        
+        # Validate secure config structure
+        if [ -f "website/js/config-secure.js" ]; then
+          echo "✅ Secure configuration template found"
+        fi
+        
+        echo "✅ Configuration validation completed"
+
+  deployment-readiness:
+    runs-on: ubuntu-latest
+    needs: [security-scan, prevent-sensitive-data, validate-config]
+    
+    steps:
+    - name: Deployment readiness check
+      run: |
+        echo "🚀 All security checks passed!"
+        echo "Repository is ready for secure deployment practices."
+        echo ""
+        echo "Remember to:"
+        echo "1. Use environment variables for all secrets"
+        echo "2. Host sensitive backend services separately"
+        echo "3. Deploy frontend to GitHub Pages safely"
+        echo "4. Monitor for security issues post-deployment"
